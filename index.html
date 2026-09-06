@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Historial 3.º A-E</title>
+
+    <link rel="stylesheet" href="style-v2.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         MODAL DE BIENVENIDA — PRIMERA VISITA
+    ========================================== -->
+
+    <div
+        id="welcomeModal"
+        class="welcome-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="welcomeModalTitle"
+        aria-describedby="welcomeModalText"
+        hidden
+    >
+        <div class="welcome-modal-backdrop" data-close-welcome></div>
+
+        <div class="welcome-modal-card">
+            <button
+                type="button"
+                id="closeWelcomeModal"
+                class="welcome-modal-close"
+                aria-label="Cerrar mensaje de bienvenida"
+            >
+                ×
+            </button>
+
+            <div class="welcome-modal-icon" aria-hidden="true">
+                ✦
+            </div>
+
+            <span class="eyebrow">
+                ¡BIENVENIDO/A!
+            </span>
+
+            <h2 id="welcomeModalTitle">
+                Un pequeño mensaje antes de comenzar
+            </h2>
+
+            <p id="welcomeModalText">
+                Hice esta página con la intención de que tengamos una mayor
+                claridad sobre los temas vistos, tareas y actividades de
+                nuestro salón <strong>3.A-E</strong>.
+            </p>
+
+            <p>
+                Si tienes alguna sugerencia, duda o encuentras algún error,
+                puedes comentarlo en el grupo de WhatsApp
+                <strong>“3.A-E Opiniones, dudas y sugerencias”</strong>.
+            </p>
+
+            <p>
+                Espero que esta idea les sea de utilidad y, sobre todo,
+                que les guste. Muchas gracias! 
+            </p>
+
+            <button
+                type="button"
+                id="welcomeModalButton"
+                class="welcome-modal-button"
+            >
+                ¡Entendido, comenzar!
+            </button>
+        </div>
+    </div>
+
+
+    <header class="header">
+        <div class="header-content">
+
+            <div class="logo">
+                <img
+                    src="logo.png"
+                    alt="Logo de Bitácora Académica"
+                    class="logo-image"
+                >
+            </div>
+
+            <div>
+                <h1>Historial 3.º A-E</h1>
+                <p>Por David Adrián</p>
+            </div>
+
+            <button
+                type="button"
+                id="themeToggle"
+                class="theme-toggle"
+                aria-label="Activar modo oscuro"
+                aria-pressed="false"
+                title="Activar modo oscuro"
+            >
+                <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+                <span class="theme-toggle-text">Modo oscuro</span>
+            </button>
+
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <!-- =========================================
+             DASHBOARD
+        ========================================== -->
+
+        <section id="dashboardView" class="view active-view">
+
+            <section class="welcome-section">
+
+                <span class="eyebrow">
+                    PANEL PRINCIPAL
+                </span>
+
+                <h2>
+                    ¿Qué puedes hacer?
+                </h2>
+
+                <p>
+                    Consulta tus pendientes, busca cualquier registro
+                    y revisa rápidamente el progreso de cada materia.
+                </p>
+
+            </section>
+
+
+            <!-- =====================================
+                 ESTADÍSTICAS
+            ====================================== -->
+
+            <section class="stats">
+
+                <div class="stat-card">
+                    <span class="stat-label">
+                        Materias
+                    </span>
+
+                    <strong id="totalMaterias">
+                        —
+                    </strong>
+                </div>
+
+
+                <div class="stat-card">
+                    <span class="stat-label">
+                        Pendientes
+                    </span>
+
+                    <strong id="totalPendientes">
+                        —
+                    </strong>
+                </div>
+
+
+                <div class="stat-card">
+                    <span class="stat-label">
+                        Registros
+                    </span>
+
+                    <strong id="totalRegistros">
+                        —
+                    </strong>
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 ESTADO DE DATOS
+            ====================================== -->
+
+            <section class="data-refresh" aria-label="Estado de actualización de datos">
+                <div class="data-refresh-info">
+                    <div class="data-refresh-icon" aria-hidden="true">↻</div>
+
+                    <div>
+                        <span class="data-refresh-label">ACTUALIZACIÓN DE DATOS</span>
+                        <p id="lastUpdateText" class="data-refresh-text" aria-live="polite">
+                            Cargando datos...
+                        </p>
+                        <p id="lastUpdateExact" class="data-refresh-exact">
+                            Conectando con la bitácora...
+                        </p>
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    id="refreshDataButton"
+                    class="refresh-data-button"
+                    aria-label="Actualizar datos de la bitácora"
+                >
+                    <span class="refresh-data-icon" aria-hidden="true">↻</span>
+                    <span class="refresh-data-label-text">Actualizar datos</span>
+                </button>
+            </section>
+
+
+            <!-- =====================================
+                 BÚSQUEDA GLOBAL
+            ====================================== -->
+
+            <section class="subjects-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            BÚSQUEDA
+                        </span>
+
+                        <h2>
+                            Encuentra algo rápidamente
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="search-container">
+
+                    <input
+                        type="search"
+                        id="globalSearch"
+                        class="search-input"
+                        placeholder="Buscar materia, tema, descripción..."
+                        autocomplete="off"
+                        aria-label="Buscar en toda la bitácora"
+                    >
+
+                    <button
+                        type="button"
+                        id="clearSearchButton"
+                        class="search-clear"
+                        hidden
+                        aria-label="Limpiar búsqueda"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="searchResultsContainer"
+                    class="search-results"
+                    hidden
+                ></div>
+
+            </section>
+
+
+            <!-- =====================================
+                 PENDIENTES
+            ====================================== -->
+
+            <section class="pending-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            QUÉ DEBO HACER
+                        </span>
+
+                        <h2>
+                            Pendientes
+                        </h2>
+                    </div>
+
+                    <span
+                        id="pendingSummary"
+                        class="section-count"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="pendingContainer"
+                    class="pending-container"
+                ></div>
+
+            </section>
+
+
+            <!-- =====================================
+                 MATERIAS
+            ====================================== -->
+
+            <section class="subjects-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            MATERIAS
+                        </span>
+
+                        <h2>
+                            Nuestro recorrido académico
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="subjectsContainer"
+                    class="subjects-container"
+                ></div>
+
+            </section>
+
+        </section>
+
+
+        <!-- =========================================
+             VISTA DE MATERIA
+        ========================================== -->
+
+        <section id="subjectView" class="view">
+
+            <!-- Breadcrumb -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación"
+            >
+
+                <button
+                    type="button"
+                    id="breadcrumbDashboard"
+                    class="breadcrumb-button"
+                >
+                    Panel principal
+                </button>
+
+                <span aria-hidden="true">
+                    /
+                </span>
+
+                <span
+                    id="breadcrumbSubject"
+                    class="breadcrumb-current"
+                >
+                    Materia
+                </span>
+
+            </nav>
+
+
+            <!-- Botón volver -->
+
+            <button
+                type="button"
+                id="backButton"
+                class="back-button"
+            >
+                ← Volver
+            </button>
+
+
+            <!-- Hero de materia -->
+
+            <section class="subject-hero">
+
+                <span class="eyebrow">
+                    MATERIA
+                </span>
+
+                <h2 id="subjectTitle">
+                    —
+                </h2>
+
+                <p id="subjectSubtitle">
+                    —
+                </p>
+
+            </section>
+
+
+            <!-- Estadísticas -->
+
+            <section class="stats">
+
+                <div class="stat-card">
+                    <span class="stat-label">
+                        Registros
+                    </span>
+
+                    <strong id="subjectTotal">
+                        —
+                    </strong>
+                </div>
+
+
+                <div class="stat-card">
+                    <span class="stat-label">
+                        Actividades
+                    </span>
+
+                    <strong id="subjectActivities">
+                        —
+                    </strong>
+                </div>
+
+
+                <div class="stat-card">
+                    <span class="stat-label">
+                        Tareas
+                    </span>
+
+                    <strong id="subjectTasks">
+                        —
+                    </strong>
+                </div>
+
+            </section>
+
+
+            <!-- Filtros -->
+
+            <section class="history-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            HISTORIAL
+                        </span>
+
+                        <h2>
+                            Registros de la materia
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="history-controls">
+
+                    <div class="filter-buttons">
+
+                        <button
+                            type="button"
+                            class="filter-button active-filter"
+                            data-filter="todo"
+                        >
+                            Todo
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-button"
+                            data-filter="actividad"
+                        >
+                            Actividades
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-button"
+                            data-filter="tarea"
+                        >
+                            Tareas
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-button"
+                            data-filter="pendiente"
+                        >
+                            Pendientes
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-button"
+                            data-filter="completado"
+                        >
+                            Completados
+                        </button>
+
+                    </div>
+
+
+                    <input
+                        type="search"
+                        id="historySearch"
+                        class="search-input"
+                        placeholder="Buscar en esta materia..."
+                        autocomplete="off"
+                        aria-label="Buscar dentro del historial"
+                    >
+
+                </div>
+
+
+                <div
+                    id="historyContainer"
+                    class="history-container"
+                ></div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+        <p>
+            © 2026 Wiwit Studios. Todos los derechos reservados.
+        </p>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
